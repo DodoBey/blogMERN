@@ -41,11 +41,11 @@ const authUser = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            token: generateToken(user._id)
-        })
+            token: generateToken(user._id),
+        });
     } else {
-        res.status(400)
-        throw new Error("Invalid Email or Password")
+        res.status(401);
+        throw new Error("Invalid Email or Password");
     }
 
 });
