@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Container, Nav, Form, FormControl, NavDropdown } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -13,14 +13,6 @@ const Header = () => {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className='m-auto'>
-                        <Form className="d-flex">
-                            <FormControl
-                                type="search"
-                                placeholder="Search"
-                                className="me-2"
-                                aria-label="Search"
-                            />
-                        </Form>
                     </Nav>
                     <Nav
                         className="my-2 my-lg-0"
