@@ -5,6 +5,9 @@ import Header from './components/Header/Header';
 import LandingPage from './components/UI/LandingPage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Blog from './components/UI/Blog';
+import Posts from './components/UI/Posts';
+import LoginPage from './components/UI/LoginPage';
+import RegisterPage from './components/UI/RegisterPage';
 
 function App() {
   return (
@@ -12,7 +15,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="blog" element={<Blog />} />
+        <Route path="blog/posts" element={<Posts />} />
       </Routes>
       <Footer />
     </BrowserRouter>

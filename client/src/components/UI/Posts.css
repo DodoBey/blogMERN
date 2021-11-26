@@ -1,0 +1,11 @@
+.allPosts {
+  min-height: 90vh;
+  background-color: #7a7d8d;
+  padding: 20px;
+}
+
+.postButtons {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px 0;
+}
