@@ -1,0 +1,28 @@
+    // if (user.password == password) {
+    //     return res.json({
+    //         _id: user._id,
+    //         name: user.name,
+    //         email: user.email,
+    //         token: generateToken(user._id)
+    //     })
+    // } else {
+    //     return res.status(400).json({
+    //         message: "Invalid Email or Password"
+    //     })
+    //     throw new Error("Invalid Email or Password")
+    // }
+    // User.comparePassword(password, user.password, (error, isMatch) => {
+    //     console.log(ısMatch);
+    // })
+    // if (user) {
+    //     res.json({
+    //         _id: user._id,
+    //         name: user.name,
+    //         email: user.email,
+    //         token: generateToken(user._id)
+    //     })
+    // } else {
+    //     res.status(400)
+    //     throw new Error("Invalid Email or Password")
+    // }
+    // return res.status(200).json({ user })
