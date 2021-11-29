@@ -1,8 +1,23 @@
 import React from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from '../../actions/userActions';
 
 const Header = () => {
+
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+
+    const userLogin = useSelector(state => state.userLogin);
+    const { userInfo } = userLogin;
+
+    const logoutHandler = () => {
+        dispatch(logout());
+        navigate("/")
+    };
+
     return (
         <Navbar expand="lg"
             style={{
@@ -23,7 +38,7 @@ const Header = () => {
                         <NavDropdown title="Dogukan Yigiter" id="navbarScrollingDropdown">
                             <NavDropdown.Item href="#action2">My Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action3">
+                            <NavDropdown.Item onClick={logoutHandler}>
                                 Logout
                             </NavDropdown.Item>
                         </NavDropdown>
