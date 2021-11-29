@@ -1,45 +1,37 @@
-import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import "./LoginPage.css"
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import ErrorMessage from './ErrorMessage';
+import "./LoginPage.css";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from '../../actions/userActions';
 
-const LoginPage = () => {
+const LoginPage = ({ history }) => {
 
+    const navigate = useNavigate()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false)
+
+    const dispatch = useDispatch();
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { loading, error, userInfo } = userLogin;
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate("/blog")
+        }
+    }, [userInfo])
 
     const submitHandler = async (e) => {
         e.preventDefault();
-
-        try {
-            const config = {
-                headers: {
-                    "Content-type": "application/json"
-                }
-            }
-
-            setLoading(true);
-
-            const { data } = await axios.post('/api/users/login', {
-                email, password
-            },
-                config
-            );
-
-            console.log(data);
-            localStorage.setItem('userInfo', JSON.stringify(data));
-            setLoading(false);
-        } catch (error) {
-            setError(error.response.data.message);
-        }
+        dispatch(login(email, password));
     };
 
     return (
         <div className="loginAll">
             <Container className="loginArea">
+                {error && <ErrorMessage error={error} />}
                 <Form className="loginForm" onSubmit={submitHandler}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
@@ -61,7 +53,7 @@ const LoginPage = () => {
                     </Row>
                 </Form>
             </Container>
-        </div>
+        </div >
     )
 }
 
