@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+
+// User modal for login etc.
 const userSchema = mongoose.Schema(
     {
         name: { type: String, required: true },
@@ -12,11 +14,12 @@ const userSchema = mongoose.Schema(
     }
 );
 
-
+// Password encryption
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
+// Password decrytion and check for user
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
         next();

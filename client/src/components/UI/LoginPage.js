@@ -6,7 +6,7 @@ import "./LoginPage.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from '../../actions/userActions';
 
-const LoginPage = ({ history }) => {
+const LoginPage = () => {
 
     const navigate = useNavigate()
     const [email, setEmail] = useState("");
