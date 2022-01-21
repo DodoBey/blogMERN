@@ -24,7 +24,7 @@ const Header = () => {
                 backgroundColor: "#676d86",
             }}>
             <Container>
-                <Navbar.Brand><Link to="/">YourBlog</Link></Navbar.Brand>
+                <Navbar.Brand as={Link} to="/">YourBlog</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className='m-auto'>
@@ -34,10 +34,8 @@ const Header = () => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link><Link to="/blog">Blog</Link></Nav.Link>
-                        <NavDropdown title="Dogukan Yigiter" id="navbarScrollingDropdown">
-                            <NavDropdown.Item href="#action2">My Profile</NavDropdown.Item>
-                            <NavDropdown.Divider />
+                        <Nav.Link as={Link} to="/blog">Blog</Nav.Link>
+                        <NavDropdown title={userInfo && userInfo.name} id="navbarScrollingDropdown">
                             <NavDropdown.Item onClick={logoutHandler}>
                                 Logout
                             </NavDropdown.Item>
