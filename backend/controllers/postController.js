@@ -22,4 +22,54 @@ const createPost = asyncHandler(async (req, res) => {
 }
 )
 
-module.exports = { getPosts, createPost }
+const getPostById = asyncHandler(async (req, res) => {
+    const post = await Post.findById(req.params.id)
+
+    if (post) {
+        res.json(post)
+    } else {
+        res.status(400).json({ message: "Post not found" })
+    }
+})
+
+const updatePost = asyncHandler(async (req, res) => {
+    const { title, content, category } = req.body
+
+    const post = await Post.findById(req.params.id)
+
+    if (post.user.toString() !== req.user._id.toString()) {
+        res.status(401)
+        throw new Error("You are not allowed to perform this action")
+    }
+
+    if (post) {
+        post.title = title
+        post.content = content
+        post.category = category
+
+        const updatedPost = await post.save()
+        res.json(updatedPost)
+    } else {
+        res.status(404)
+        throw new Error("Post not found")
+    }
+})
+
+const deletePost = asyncHandler(async (req, res) => {
+    const post = await Post.findById(req.params.id)
+
+    if (post.user.toString() !== req.user._id.toString()) {
+        res.status(401)
+        throw new Error("You are not allowed to perform this action")
+    }
+
+    if (post) {
+        await post.remove()
+        res.json({ message: "Post Removed" })
+    } else {
+        res.status(404)
+        throw new Error("Post not found")
+    }
+})
+
+module.exports = { getPosts, createPost, getPostById, updatePost, deletePost }
