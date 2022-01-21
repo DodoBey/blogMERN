@@ -1,40 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Card, Button, Row, Col, Badge } from 'react-bootstrap';
 import "./Posts.css";
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'
+import { listPosts } from '../../actions/postsActions';
+import { useNavigate } from 'react-router';
 
 
 const Posts = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-    const [notes, setNotes] = useState([]);
+    const postList = useSelector(state => state.postList)
+    const { posts, error } = postList
 
-    const deleteHandler = (id) => {
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
 
-    }
-
-    const fetchPosts = async () => {
-        const { data } = await axios.get('/api/notes');
-        setNotes(data);
-    }
 
     useEffect(() => {
-        fetchPosts()
-    }, [])
+        dispatch(listPosts())
+        if (!userInfo) {
+            navigate("/")
+        }
+    }, [dispatch])
 
     return (
         <Row xs={1} md={4} className="allPosts g-4">
-            {notes.map((note) => (
-                <Col key={note._id}>
+            {posts?.map((post) => (
+                <Col key={post._id}>
                     <Card style={{ width: '18rem' }}>
                         <Card.Body style={{ paddin: '10px 0' }}>
-                            <Card.Title>{note.title}</Card.Title>
+                            <Card.Title>{post.title}</Card.Title>
                             <Card.Text>
-                                {note.content}
+                                {post.content}
                             </Card.Text>
-                            <Badge>{note.category}</Badge>
+                            <Badge>{post.category}</Badge>
                             <div className="postButtons">
-                                <Button variant="primary" size="sm" href={`/blog/posts/${note._id}`}>Update</Button>
-                                <Button variant="outline-primary" size="sm" onClick={deleteHandler}>Delete</Button>
+                                <Button variant="primary" size="sm" href={`/blog/posts/${post._id}`}>Update</Button>
+                                <Button variant="outline-primary" size="sm">Delete</Button>
                             </div>
                         </Card.Body>
                     </Card>
