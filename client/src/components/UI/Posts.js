@@ -16,17 +16,20 @@ const Posts = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
+    const postUpdate = useSelector((state) => state.postUpdate);
+    const { success: successUpdate } = postUpdate;
+
 
     useEffect(() => {
         dispatch(listPosts())
         if (!userInfo) {
             navigate("/")
         }
-    }, [dispatch])
+    }, [dispatch, userInfo, successUpdate])
 
     return (
         <Row xs={1} md={4} className="allPosts g-4">
-            {posts?.map((post) => (
+            {posts?.reverse().map((post) => (
                 <Col key={post._id}>
                     <Card style={{ width: '18rem' }}>
                         <Card.Body style={{ paddin: '10px 0' }}>
