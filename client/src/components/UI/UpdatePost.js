@@ -1,40 +1,59 @@
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { Card, Button, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
-import { createPostAction } from '../../actions/postsActions';
+import { useNavigate, useParams } from 'react-router';
+import { updatePostAction } from '../../actions/postsActions';
 import ErrorMessage from './ErrorMessage';
-import "./CreatePost.css"
+import "./UpdatePost.css"
 
-const CreatePost = () => {
+const UpdatePost = ({ match }) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [category, setCategory] = useState("");
 
     const navigate = useNavigate();
+    const params = useParams()
 
     const dispatch = useDispatch();
 
-    const postCreate = useSelector((state) => state.postCreate);
-    const { error, post } = postCreate;
+    const postUpdate = useSelector((state) => state.postUpdate);
+    const { error } = postUpdate;
 
-    console.log(post)
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        if (!title || !content || !category) return;
+    useEffect(() => {
+        const fetching = async () => {
+            const { data } = await axios.get(`/api/posts/${params.id}`)
 
-        dispatch(createPostAction(title, content, category));
+            setTitle(data.title)
+            setContent(data.content)
+            setCategory(data.category)
+        }
+        fetching()
+    }, [params.id])
 
-        navigate("../blog/posts")
-    };
+    const resetHandler = () => {
+        setTitle("")
+        setContent("")
+        setContent("")
+    }
+
+    const updateHandler = (e) => {
+        e.preventDefault()
+        dispatch(updatePostAction(params.id, title, content, category))
+
+        if (!title || !content || !category) return
+
+        resetHandler()
+        navigate("/blog/posts")
+    }
 
     return (
-        <Row className="createPost">
-            <Card className='createForm'>
-                <Card.Header>Create a new Post</Card.Header>
+        <Row className="updatePost">
+            <Card className='updateForm'>
+                <Card.Header>Update Post</Card.Header>
                 <Card.Body>
-                    <Form onSubmit={submitHandler}>
+                    <Form onSubmit={updateHandler}>
                         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
                         <Form.Group controlId="title">
                             <Form.Label>Title</Form.Label>
@@ -65,7 +84,7 @@ const CreatePost = () => {
                             />
                         </Form.Group>
                         <Button type="submit" variant="primary">
-                            Create Post
+                            Update Post
                         </Button>
                     </Form>
                 </Card.Body>
@@ -74,4 +93,4 @@ const CreatePost = () => {
     )
 }
 
-export default CreatePost
+export default UpdatePost
