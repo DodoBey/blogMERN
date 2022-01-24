@@ -10,6 +10,9 @@ const Blog = () => {
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
 
+    const postList = useSelector(state => state.postList)
+    const { posts } = postList
+
     useEffect(() => {
         if (!userInfo) {
             navigate("/..")

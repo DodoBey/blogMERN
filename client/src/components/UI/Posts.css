@@ -4,6 +4,10 @@
   padding: 20px;
 }
 
+.allPosts h2 {
+  text-align: center;
+}
+
 .postButtons {
   display: flex;
   justify-content: space-evenly;

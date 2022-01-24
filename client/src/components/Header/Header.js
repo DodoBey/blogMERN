@@ -24,7 +24,7 @@ const Header = () => {
                 backgroundColor: "#676d86",
             }}>
             <Container>
-                <Navbar.Brand as={Link} to="/">YourBlog</Navbar.Brand>
+                <Navbar.Brand as={Link} to="/" >YourBlog</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className='m-auto'>
