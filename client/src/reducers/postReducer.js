@@ -1,4 +1,4 @@
-import { POST_CREATE_FAIL, POST_CREATE_REQUEST, POST_CREATE_SUCCESS, POST_LIST_FAIL, POST_LIST_REQUEST, POST_LIST_SUCCESS, POST_UPDATE_FAIL, POST_UPDATE_REQUEST, POST_UPDATE_SUCCESS } from "../constants/postsConstants";
+import { POST_CREATE_FAIL, POST_CREATE_REQUEST, POST_CREATE_SUCCESS, POST_DELETE_FAIL, POST_DELETE_REQUEST, POST_DELETE_SUCCESS, POST_LIST_FAIL, POST_LIST_REQUEST, POST_LIST_SUCCESS, POST_UPDATE_FAIL, POST_UPDATE_REQUEST, POST_UPDATE_SUCCESS } from "../constants/postsConstants";
 
 export const postListReducer = (state = { posts: [] }, action) => {
     switch (action.type) {
@@ -34,6 +34,19 @@ export const postUpdateReducer = (state = {}, action) => {
         case POST_UPDATE_SUCCESS:
             return { loading: false, success: true }
         case POST_UPDATE_FAIL:
+            return { loading: false, error: action.payload, success: false }
+        default:
+            return state
+    }
+}
+
+export const postDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+        case POST_DELETE_REQUEST:
+            return { loading: true }
+        case POST_DELETE_SUCCESS:
+            return { loading: false, success: true }
+        case POST_DELETE_FAIL:
             return { loading: false, error: action.payload, success: false }
         default:
             return state
